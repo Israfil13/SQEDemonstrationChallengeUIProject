@@ -1,16 +1,27 @@
 package com.sample.test.demo;
 
 import static org.testng.Assert.fail;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+
+import java.util.concurrent.TimeUnit;
 
 public class TestBase {
 
     private Configuration config;
-    protected WebDriver driver;
+    public WebDriver driver;
     protected String url;
+
+
+
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Throwable {
@@ -18,7 +29,11 @@ public class TestBase {
         url = config.getUrl();
         initializelDriver();
         navigateToSite();
+        driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+        Thread.sleep(5000);
     }
+
+
 
     private void navigateToSite() {
         driver.get(url);
@@ -46,7 +61,7 @@ public class TestBase {
         else {
             fail("Unsupported bfrowser " + config.getBrowser());
         }
-       
+
     }
 
 
